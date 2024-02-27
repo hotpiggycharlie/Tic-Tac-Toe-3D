@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_0.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_12.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_15.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_18.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_21.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_24.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_27.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_3.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_30.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_33.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_36.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_39.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_42.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_6.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_9.png</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbx</File>
+    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/DebugText.spritefont</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
