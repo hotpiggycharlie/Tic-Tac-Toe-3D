@@ -3,7 +3,7 @@
   <SourceFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_15.png</SourceFile>
   <SourceTime>2024-02-24T19:29:07.7556374+00:00</SourceTime>
   <DestFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/bin/Windows/Content/character.fbm/Image_15_0.xnb</DestFile>
-  <DestTime>2024-02-24T19:54:41.1585048+00:00</DestTime>
+  <DestTime>2024-02-27T17:37:20.4894225+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
@@ -14,7 +14,7 @@
   </Parameters>
   <Parameters>
     <Key>ColorKeyEnabled</Key>
-    <Value>True</Value>
+    <Value>False</Value>
   </Parameters>
   <Parameters>
     <Key>GenerateMipmaps</Key>

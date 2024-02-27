@@ -9,6 +9,7 @@ namespace _3Dtests
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Model _model;
+        private TextureCube _slide;
         private Vector3 _position;
         private float _speed, _RotationSpeed, _sprintSpeed, _defaultSpeed;
         private float RotatX, RotatY;
@@ -41,6 +42,8 @@ namespace _3Dtests
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            _slide = new TextureCube(_graphics.GraphicsDevice, 5, false, SurfaceFormat.Color);
             _model = Content.Load<Model>("character");
             _font = Content.Load<SpriteFont>("DebugText");
         }
@@ -91,13 +94,18 @@ namespace _3Dtests
             RotatY = _RotationSpeed * mouseState.Y;
 
             //world = Matrix.CreateRotationZ(RotatX) * Matrix.CreateTranslation(_position);
+            world = Matrix.CreateTranslation(_position);
+
             /*Vector3 CameraDirection = Matrix.CreateFromYawPitchRoll(RotatY, RotatX, 0).Forward;
             Vector3 CamPosition = new Vector3(_position.X + 10, _position.Y, _position.Z);
             Vector3 camTarget = _model.Root.Transform.Forward + CameraDirection;*/
-            float _camAngle = RotatX;
+
+            /*float _camAngle = RotatX;
             Vector3 _camPosition = new Vector3(_position.X+5, _position.Y, _position.Z);
             Vector3 _camTarget = _camPosition + Matrix.CreateFromYawPitchRoll(_camAngle, 4.655f, 0).Forward;
-            view = Matrix.CreateLookAt(_camPosition, _camTarget, Vector3.Up);
+            view = Matrix.CreateLookAt(_camPosition, _camTarget, Vector3.Up);*/
+
+            view = Matrix.CreateLookAt(new Vector3(_position.X + 5, _position.Y + 5, _position.Z+1), new Vector3(_position.X, _position.Y, _position.Z + 1), Vector3.UnitZ);
 
             base.Update(gameTime);
         }
