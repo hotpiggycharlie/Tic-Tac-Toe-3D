@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbx</File>
-    <File>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/DebugText.spritefont</File>
+    <File>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/character.fbx</File>
+    <File>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/DebugText.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

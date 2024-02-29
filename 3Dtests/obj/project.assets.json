@@ -7530,11 +7530,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\3Dtests.csproj",
+      "projectUniqueName": "C:\\Users\\charl\\Documents\\GitHub\\3Dtests\\3Dtests\\3Dtests.csproj",
       "projectName": "3Dtests",
-      "projectPath": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\3Dtests.csproj",
+      "projectPath": "C:\\Users\\charl\\Documents\\GitHub\\3Dtests\\3Dtests\\3Dtests.csproj",
       "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
-      "outputPath": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\obj\\",
+      "outputPath": "C:\\Users\\charl\\Documents\\GitHub\\3Dtests\\3Dtests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -7595,7 +7595,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/DebugText.spritefont</SourceFile>
-  <SourceTime>2024-02-25T14:39:21.8411096+00:00</SourceTime>
-  <DestFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/bin/Windows/Content/DebugText.xnb</DestFile>
-  <DestTime>2024-02-25T14:39:32.4461521+00:00</DestTime>
+  <SourceFile>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/DebugText.spritefont</SourceFile>
+  <SourceTime>2024-02-27T17:23:56.6768467+00:00</SourceTime>
+  <DestFile>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/bin/Windows/Content/DebugText.xnb</DestFile>
+  <DestTime>2024-02-29T19:55:34.6070715+00:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
