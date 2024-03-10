@@ -106,3 +106,4 @@ C:\Users\charl\Documents\GitHub\3Dtests\3Dtests\obj\Debug\net6.0-windows\refint\
 C:\Users\charl\Documents\GitHub\3Dtests\3Dtests\obj\Debug\net6.0-windows\3Dtests.pdb
 C:\Users\charl\Documents\GitHub\3Dtests\3Dtests\obj\Debug\net6.0-windows\3Dtests.genruntimeconfig.cache
 C:\Users\charl\Documents\GitHub\3Dtests\3Dtests\obj\Debug\net6.0-windows\ref\3Dtests.dll
+D:\Chrome Downloads\C# Testing\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\untitled.xnb

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/character.fbm/Image_27.png</SourceFile>
-  <SourceTime>2024-02-27T17:23:58.1433018+00:00</SourceTime>
-  <DestFile>C:/Users/charl/Documents/GitHub/3Dtests/3Dtests/Content/bin/Windows/Content/character.fbm/Image_27_0.xnb</DestFile>
-  <DestTime>2024-02-29T19:55:27.5475381+00:00</DestTime>
+  <SourceFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/character.fbm/Image_27.png</SourceFile>
+  <SourceTime>2024-02-24T19:29:07.7526423+00:00</SourceTime>
+  <DestFile>D:/Chrome Downloads/C# Testing/3Dtests/3Dtests/Content/bin/Windows/Content/character.fbm/Image_27_0.xnb</DestFile>
+  <DestTime>2024-03-08T20:28:56.7570682+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
