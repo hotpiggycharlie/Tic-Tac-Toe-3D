@@ -7530,11 +7530,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\3Dtests.csproj",
-      "projectName": "3Dtests",
-      "projectPath": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\3Dtests.csproj",
+      "projectUniqueName": "C:\\Users\\charl\\OneDrive - Barnsley College\\Computer Science Projects\\3Dtests\\3Dtests\\Tic Tac Toe.csproj",
+      "projectName": "Tic Tac Toe",
+      "projectPath": "C:\\Users\\charl\\OneDrive - Barnsley College\\Computer Science Projects\\3Dtests\\3Dtests\\Tic Tac Toe.csproj",
       "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
-      "outputPath": "D:\\Chrome Downloads\\C# Testing\\3Dtests\\3Dtests\\obj\\",
+      "outputPath": "C:\\Users\\charl\\OneDrive - Barnsley College\\Computer Science Projects\\3Dtests\\3Dtests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

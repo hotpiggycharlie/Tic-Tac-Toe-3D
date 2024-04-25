@@ -1,0 +1,11 @@
+add numbers to this folder and import them
+call each number individually in update (not drawtime?) use switch
+make a nice looking background for the intro in 3D
+add a fade or a slide animation to menu, could be nice
+make the 3D scene in which the game will be played
+add a 2nd player model
+add names of players, will need some work
+ADD A LEADERBOARD, use a database, figure that out.
+import image from pc to act as profile pic for players? use forms ui for it probably idk
+make $$$
+starve (optional)
