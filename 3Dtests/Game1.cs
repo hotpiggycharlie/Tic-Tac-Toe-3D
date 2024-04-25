@@ -8,23 +8,23 @@ namespace _3Dtests
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Model _model, board;
-        private Vector3 _position, Target, CurrentFacing;
-        private float _speed, _RotationSpeed, _sprintSpeed, _defaultSpeed;
-        private float RotatX, RotatY;
-
+        private Model _model;
+        private Vector3 Target, CurrentFacing;
+        Board _board;
         private SpriteFont _font;
-
-
+        private double FpsTime;
+        private int TEMPFPS, FPS;
 
         private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-        private Matrix world2 = Matrix.CreateRotationY(MathHelper.ToRadians(180)) * Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(new Vector3(0, 8, -1));
         private Matrix view = Matrix.CreateLookAt(new Vector3(0, 10, 1), new Vector3(0, 0, 0), -Vector3.UnitY);
-        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
+        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1280f / 720, 0.1f, 100f);
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -32,9 +32,7 @@ namespace _3Dtests
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _position = Vector3.Zero;
-            _defaultSpeed = 1f; _sprintSpeed = 10f;
-            _RotationSpeed = 0.006f;
+            
             base.Initialize();
         }
 
@@ -45,7 +43,7 @@ namespace _3Dtests
             // TODO: use this.Content to load your game content here
 
             _model = Content.Load<Model>("character");
-            board = Content.Load<Model>("untitled");
+            _board = new Board(Content.Load<Model>("TicTacToeBoard"));
             _font = Content.Load<SpriteFont>("DebugText");
         }
 
@@ -56,38 +54,20 @@ namespace _3Dtests
 
             // TODO: Add your update logic here
 
-
-
-            this.IsMouseVisible = false;
             var mouseState = Mouse.GetState();
 
             var kstate = Keyboard.GetState();
-            /*
-            if (kstate.IsKeyDown(Keys.LeftShift)) //Get sprinting, must be first
+
+            TEMPFPS++;
+            FpsTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (FpsTime >= 1000)
             {
-                _speed = _sprintSpeed;
-            }
-            else
-            {
-                _speed = _defaultSpeed;
+                FPS = TEMPFPS;
+                TEMPFPS = 0;
+                FpsTime = 0;
             }
 
-            if (kstate.IsKeyDown(Keys.W)) //Movement basics
-            {
-                _position.Y += _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Keys.A))
-            {
-                _position.X -= _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Keys.D))
-            {
-                _position.X += _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (kstate.IsKeyDown(Keys.S))
-            {
-                _position.Y -= _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }*/
+
 
             if (kstate.IsKeyDown(Keys.Space))
             {
@@ -98,75 +78,35 @@ namespace _3Dtests
                 Target = new Vector3(0, 0, 0);
             }
 
-            if(CurrentFacing != Target)
+            if (CurrentFacing != Target)
             {
-                if (CurrentFacing.X < Target.X)
-                {
-                    CurrentFacing.X += 1;
-                }
-                else if (CurrentFacing.X > Target.X)
-                {
-                    CurrentFacing.X -= 1;
-                }
-
-                if (CurrentFacing.Y < Target.Y)
-                {
-                    CurrentFacing.Y += 1;
-                }
-                else if (CurrentFacing.Y > Target.Y)
-                {
-                    CurrentFacing.Y -= 1;
-                }
-
-                if (CurrentFacing.Z < Target.Z)
-                {
-                    CurrentFacing.Z += 1;
-                }
-                else if (CurrentFacing.Z > Target.Z)
-                {
-                    CurrentFacing.Z -= 1;
-                }
+                CurrentFacing = Vector3.SmoothStep(CurrentFacing, Target, 0.25f);
             }
 
 
-
-            //RotatX = _RotationSpeed * mouseState.X;
-            //RotatY = _RotationSpeed * mouseState.Y;
-
-            //world = Matrix.CreateRotationZ(RotatX) * Matrix.CreateRotationX(-RotatY) * Matrix.CreateTranslation(_position);
-            //world = Matrix.CreateTranslation(_position);
-
-            /*Vector3 CameraDirection = Matrix.CreateFromYawPitchRoll(RotatY, RotatX, 0).Forward;
-            Vector3 CamPosition = new Vector3(_position.X + 10, _position.Y, _position.Z);
-            Vector3 camTarget = _model.Root.Transform.Forward + CameraDirection;*/
-
-            /*float _camAngle = RotatX;
-            Vector3 _camPosition = new Vector3(_position.X+5, _position.Y, _position.Z);
-            Vector3 _camTarget = _camPosition + Matrix.CreateFromYawPitchRoll(_camAngle, 4.655f, 0).Forward;
-            view = Matrix.CreateLookAt(_camPosition, _camTarget, Vector3.Up);*/
-
-            //view = Matrix.CreateLookAt(new Vector3(_position.X + 5, _position.Y + 5, _position.Z+1), new Vector3(_position.X, _position.Y, _position.Z + 1), Vector3.UnitZ);
 
             view = Matrix.CreateLookAt(new Vector3(0, 10, 1), CurrentFacing, -Vector3.UnitY);
 
             base.Update(gameTime);
         }
 
+       
+
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.WhiteSmoke);
 
             // TODO: Add your drawing code here
 
-            //_spriteBatch.Begin();
+            _spriteBatch.Begin();
 
-            //_spriteBatch.DrawString(_font, "X: " + RotatX.ToString() + " Y: " + RotatY.ToString(), new Vector2(0, 0), Color.Black);
-            //_spriteBatch.DrawString(_font, view.ToString(), new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, $"{FPS}", new Vector2(0, 0), Color.Black);
+            _spriteBatch.DrawString(_font, FPS.ToString(), new Vector2(0, 0), Color.Black);
 
-            //_spriteBatch.End();
+            _spriteBatch.End();
 
             DrawModel(_model, world, view, projection);
-            DrawModel(board, world2, view, projection);
+            DrawModel(_board.BoardModel, _board.world, view, projection);
             base.Draw(gameTime);
         }
 
@@ -180,6 +120,7 @@ namespace _3Dtests
                     effect.World = world;
                     effect.View = view;
                     effect.Projection = Projection;
+                    effect.EnableDefaultLighting();
                 }
                 mesh.Draw();
             }
