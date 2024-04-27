@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Room.obj</SourceFile>
-  <SourceTime>2024-04-21T14:09:50.4238862+01:00</SourceTime>
+  <SourceTime>2024-04-27T14:58:14.3350986+01:00</SourceTime>
   <DestFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/bin/Windows/Content/Room.xnb</DestFile>
-  <DestTime>2024-04-26T20:38:51.3213842+01:00</DestTime>
+  <DestTime>2024-04-27T14:59:39.3400941+01:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
@@ -62,9 +62,12 @@
   </Parameters>
   <Parameters>
     <Key>TextureFormat</Key>
-    <Value>Compressed</Value>
+    <Value>NoChange</Value>
   </Parameters>
   <Dependencies />
-  <BuildAsset />
+  <BuildAsset>
+    <string>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/bin/Windows/Content/door_0.xnb</string>
+    <string>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/bin/Windows/Content/Table_0.xnb</string>
+  </BuildAsset>
   <BuildOutput />
 </PipelineBuildEvent>

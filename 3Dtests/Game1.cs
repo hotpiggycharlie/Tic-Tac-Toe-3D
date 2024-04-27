@@ -21,7 +21,7 @@ namespace Tic_Tac_Toe
         private int TEMPFPS, FPS, BoardSize = 3;
         public string DebugString;
         //private Vector3 CameraPosition = new Vector3(-4,-16,15);
-        MouseState delayedMouseState;
+        private MouseState delayedMouseState;
         private GameStates Gamestate = GameStates.Menu;
         private Texture2D _menuBackground;
         private MenuButton _startButton;
@@ -188,7 +188,7 @@ namespace Tic_Tac_Toe
 
             }
 
-            delayedMouseState = mouseState; //SETS MY DELAYED MOUSE & KEYBOARD STATE AT END OF UPDATE LOOP
+            //; //SETS MY DELAYED MOUSE & KEYBOARD STATE AT END OF UPDATE LOOP
             DelayedKstate = kstate;
         }
 
@@ -249,6 +249,7 @@ namespace Tic_Tac_Toe
 
         private void TurnManagment(MouseState mouseState, Cell hoveringOver)
         {
+            DebugString = "HOVERING";
             if (Gamestate == GameStates.VsAi)
             {
                 AIRoundControl(mouseState, hoveringOver);
@@ -257,6 +258,7 @@ namespace Tic_Tac_Toe
             {
                 if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released && hoveringOver.State == CellState.Empty)
                 {
+                    DebugString = "CLICKING";
                     if (_playerturn == 1)
                     {
                         hoveringOver.update(_player1.PlayerTeam, nought, cross);
@@ -282,6 +284,7 @@ namespace Tic_Tac_Toe
                     }
                 }
             }
+            delayedMouseState = mouseState;
         }
 
 
@@ -333,20 +336,13 @@ namespace Tic_Tac_Toe
             {
                 case GameStates.VsAi or GameStates.PVP:
                     {
-                        _spriteBatch.Begin();
-
-                        _spriteBatch.DrawString(_font, $"{FPS}", new Vector2(0, 0), Color.Black);
-
-                        _spriteBatch.DrawString(_font, $"{DebugString}", new Vector2(100, 0), Color.Black);
-
-                        _spriteBatch.End();
+                        
 
                         if (Gamestate == GameStates.VsAi)
                         {
                             UpdateProcedures.DrawModel(_opponent.Model, _opponent.World, _camera.View, projection, GraphicsDevice);
                         }
 
-                        
                         _backgroundManagment.DrawMain(_camera.View, projection);
                         if(scrmgnt.Draw == true)
                         {
@@ -359,6 +355,17 @@ namespace Tic_Tac_Toe
                                 DrawModelMesh(scrmgnt.ScoreUpdate(_player2.Score));
                             }
                         }
+
+
+
+                        _spriteBatch.Begin(); //DRAWS 2D STUFF, MUST BE DRAWN LAST
+
+                        _spriteBatch.DrawString(_font, $"{FPS}", new Vector2(0, 0), Color.Wheat);
+
+                        _spriteBatch.DrawString(_font, $"{DebugString}", new Vector2(100, 0), Color.Red);
+
+                        _spriteBatch.End();
+
                         break;
                     }
                 case GameStates.Menu:

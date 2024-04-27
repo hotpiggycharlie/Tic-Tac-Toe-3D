@@ -23,7 +23,7 @@ namespace Tic_Tac_Toe
         public Board(Model x, Game game): base(game)
         {
             game1 = (Game1)game;
-            Position = new Vector3(0, 3.67f, 0);
+            Position = new Vector3(0, 2.67f, 0);
             BoardModel = x;
             world = Matrix.CreateTranslation(Position); //this just handels the board model, nothing fancy
     }
