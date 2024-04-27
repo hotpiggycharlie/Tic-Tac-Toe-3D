@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     class Opponent //holds opponent models, is needed if any animation want to be done, which I'm not certain they ever will be lol, but just to be sure
     {
@@ -26,13 +26,6 @@ namespace _3Dtests
         public Opponent(Vector3 defaultLocation)
         {
             world = Matrix.CreateWorld(defaultLocation, Vector3.UnitX, Vector3.Up);
-        }
-
-
-        public void Update(GameTime gametime)
-        {
-            //TODO: Control Opponent ANIM and such
-
         }
 
 

@@ -3,7 +3,7 @@
   <SourceFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Itbegins.obj</SourceFile>
   <SourceTime>2024-03-28T11:56:43+00:00</SourceTime>
   <DestFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/bin/Windows/Itbegins.xnb</DestFile>
-  <DestTime>2024-04-21T14:26:35.9906978+01:00</DestTime>
+  <DestTime>2024-04-26T13:19:02.5098842+01:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
@@ -46,11 +46,11 @@
   </Parameters>
   <Parameters>
     <Key>RotationY</Key>
-    <Value>180</Value>
+    <Value>0</Value>
   </Parameters>
   <Parameters>
     <Key>RotationZ</Key>
-    <Value>90</Value>
+    <Value>0</Value>
   </Parameters>
   <Parameters>
     <Key>Scale</Key>

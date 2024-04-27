@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
-    public class Board //LITERALLY JUST EXISTS FOR THE MODEL TO WORK LOL
+    public class Board: DrawableGameComponent //LITERALLY JUST EXISTS FOR THE MODEL TO WORK LOL
     {
 
         private Matrix world;
@@ -16,13 +17,20 @@ namespace _3Dtests
 
         private Model model;
         public Model BoardModel { get { return model; } set { model = value; } }
+        public Vector3 Position;
+        private Game1 game1;
 
-        public Board(Model x)
+        public Board(Model x, Game game): base(game)
         {
+            game1 = (Game1)game;
+            Position = new Vector3(0, 3.67f, 0);
             BoardModel = x;
-            world = Matrix.CreateRotationY(MathHelper.ToRadians(180)) * Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(new Vector3(0, 8, -1)); //this just handels the board model, nothing fancy
+            world = Matrix.CreateTranslation(Position); //this just handels the board model, nothing fancy
     }
 
+        public override void Draw(GameTime gameTime)//not very useful :(
+        {
+        }
 
 
 

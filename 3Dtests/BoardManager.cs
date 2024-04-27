@@ -1,4 +1,4 @@
-﻿using _3Dtests.Content;
+﻿using Tic_Tac_Toe.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,17 +11,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
-    class BoardManager // a fancy class, it does all win checking and initialising of the board, it doesn't handle any models though
+    class BoardManager: DrawableGameComponent // a fancy class, it does all win checking and initialising of the board, it doesn't handle any models though
     {
         private Cell[,] boardMetaphor;
-        float TotalBoardSizeX = 1.25f, TotalBoardSizeY = 1.25f, CellSize = 0.018f;
+        float TotalBoardSizeX = 1.25f, TotalBoardSizeY = 1f, CellSize = 0.018f;
         private Board _board;
         private bool _initialize = false;
         public Board Board { get { return _board; } }
         public Cell[,] CellGrid { get { return boardMetaphor; } }
         public bool Initialized { get { return _initialize; } }
+        private Camera _camera;
+        private Matrix projection;
+        public Action<MouseState, Cell> TurnEnd;
+        private GameWindow window;
+
+        public BoardManager(Game game, Camera camera) : base(game)
+        {
+            _camera = camera;
+            Game1 game1 = (Game1)game;
+            projection = game1.projection;
+            window = game1.Window;
+        }
 
         public void Inistialize(int BoardSizeX, int BoardSizeY, Model cellModel) 
         {
@@ -109,11 +121,40 @@ namespace _3Dtests
             return null;
         }
 
-
-
-        public void LoadModelBoard(Model model)
+        public override void Update(GameTime gameTime)
         {
-            _board = new Board(model);
+            if (Initialized)
+            {
+                MouseState mouseState = Mouse.GetState(window);
+                Cell hoveringOver = MouseHoveringOverCell(new Vector2(mouseState.X, mouseState.Y), _camera.View, projection, this.GraphicsDevice.Viewport);
+                if (hoveringOver != null)
+                {
+                    TurnEnd.Invoke(mouseState, hoveringOver);
+                }
+            }
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            if (Initialized)
+            {
+                UpdateProcedures.DrawModel(Board.BoardModel, Board.World, _camera.View, projection, GraphicsDevice);
+                foreach (Cell cell in CellGrid)
+                {
+                    UpdateProcedures.DrawModel(cell.Model, cell.World, _camera.View, projection, GraphicsDevice);
+                    if (cell.Marked())
+                    {
+                        UpdateProcedures.DrawModel(cell.ExtraModel, cell.World, _camera.View, projection, GraphicsDevice);
+                    }
+                }
+            }
+            base.Draw(gameTime);
+        }
+
+        public void LoadModelBoard(Model model, Game game)
+        {
+            _board = new Board(model, game);
         }
 
         public Cell? MouseHoveringOverCell(Vector2 Mouselocation, Matrix view, Matrix projection, Viewport viewport)

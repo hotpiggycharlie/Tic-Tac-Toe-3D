@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -8,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
-    internal class MenuButton: Game1
+    internal class MenuButton
 {
         private bool _isChecked = true;
 
