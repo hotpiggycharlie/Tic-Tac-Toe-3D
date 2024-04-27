@@ -4,7 +4,6 @@ C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dt
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Cell.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Cross.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\DebugText - Copy.xnb
-C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\DebugText.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Itbegins.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Material.001 Base Color_0.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\MenuBack.xnb
@@ -61,3 +60,4 @@ C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dt
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Numbers\numbers.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\door_0.xnb
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Table_0.xnb
+C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\Text.xnb

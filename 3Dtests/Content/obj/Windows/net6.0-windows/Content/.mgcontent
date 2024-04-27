@@ -7,7 +7,6 @@
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Board.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Cell.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Cross.obj</File>
-    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/DebugText.spritefont</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Itbegins.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/3x3.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/4x4.png</File>
@@ -21,6 +20,7 @@
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Nought.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Numbers/numbers.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Room.obj</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Text.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

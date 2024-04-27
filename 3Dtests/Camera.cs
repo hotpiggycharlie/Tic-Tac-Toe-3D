@@ -20,7 +20,7 @@ namespace Tic_Tac_Toe
         public Camera(Game game) : base(game)
         {
             this.cameraLookAt = Vector3.Zero;
-            this.Position = new Vector3(0,8.5f,2);
+            this.Position = new Vector3(0,4.8f,3.5f);
             this.Rotation = Vector3.Zero;
         }
 

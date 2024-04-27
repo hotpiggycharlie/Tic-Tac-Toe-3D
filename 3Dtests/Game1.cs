@@ -59,20 +59,20 @@ namespace Tic_Tac_Toe
         {
             // TODO: Add your initialization logic here
             _camera = new Camera(this); //new Vector3(-4, -16, 15)
-            _opponent = new Opponent(new Vector3(0, 0, -2)); //initialise opponent class
+            _opponent = new Opponent(new Vector3(0, 0f, -3.5f)); //initialise opponent class
             _boardManager = new BoardManager(this, _camera); //initialise the board manager, which later initialises the board in
 
             MenuInitialiseButtons();
 
             _player1 = new Player(CellState.Cross, "Player 1");
             _player2 = new Player(CellState.Nought, "Player 2");
-            scrmgnt = new ScoreManagment(this, Content.Load<Model>("Numbers/numbers"), _player1, _player2);
+            scrmgnt = new ScoreManagment(this, Content.Load<Model>("Numbers/numbers"), _player1, _player2, _camera);
 
             _backgroundManagment = new BackgroundManagment(Content.Load<Model>("Room"), this);
 
             Start += _backgroundManagment.SortAssets;
 
-            Components.Add(scrmgnt);
+            Components.Add(scrmgnt);//aslo list lol?
             Components.Add(_backgroundManagment);
             Components.Add(_boardManager);
             Components.Add(_camera);
@@ -105,7 +105,7 @@ namespace Tic_Tac_Toe
             _opponent.Model = Content.Load<Model>("Itbegins");
             _boardManager.LoadModelBoard(Content.Load<Model>("Board"), this);
             _cellModel = Content.Load<Model>("Cell");
-            _font = Content.Load<SpriteFont>("DebugText");
+            _font = Content.Load<SpriteFont>("Text");
             cross = Content.Load<Model>("Cross");
             nought = Content.Load<Model>("Nought");
         }
@@ -170,7 +170,7 @@ namespace Tic_Tac_Toe
                 }
                 else if (mouseState.Y <= 100)
                 {
-                    Target = new Vector3(0, 7f, -3);
+                    Target = new Vector3(0, 4.8f, -3.5f);
                 }
                 if (CurrentFacing != Target)
                 {
@@ -218,7 +218,7 @@ namespace Tic_Tac_Toe
                 _camera.SetRotation(new Vector3(-MathHelper.Clamp(mouseRotationBuffer.Y, MathHelper.ToRadians(-75.0f), MathHelper.ToRadians(75.0f)),
                     MathHelper.WrapAngle(mouseRotationBuffer.X), 0));
 
-
+                DebugString = _camera.Position.ToString();
 
             }
             if (kstate.IsKeyDown(Keys.W)) //forward
@@ -249,7 +249,6 @@ namespace Tic_Tac_Toe
 
         private void TurnManagment(MouseState mouseState, Cell hoveringOver)
         {
-            DebugString = "HOVERING";
             if (Gamestate == GameStates.VsAi)
             {
                 AIRoundControl(mouseState, hoveringOver);
@@ -258,7 +257,6 @@ namespace Tic_Tac_Toe
             {
                 if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released && hoveringOver.State == CellState.Empty)
                 {
-                    DebugString = "CLICKING";
                     if (_playerturn == 1)
                     {
                         hoveringOver.update(_player1.PlayerTeam, nought, cross);
@@ -344,17 +342,7 @@ namespace Tic_Tac_Toe
                         }
 
                         _backgroundManagment.DrawMain(_camera.View, projection);
-                        if(scrmgnt.Draw == true)
-                        {
-                            if (_player1.Score != 0)
-                            {
-                                DrawModelMesh(scrmgnt.ScoreUpdate(_player1.Score));
-                            }
-                            if (_player2.Score != 0)
-                            {
-                                DrawModelMesh(scrmgnt.ScoreUpdate(_player2.Score));
-                            }
-                        }
+                        
 
 
 
@@ -386,23 +374,7 @@ namespace Tic_Tac_Toe
             base.Draw(gameTime);
         }
 
-        private void DrawModelMesh(ModelMesh mesh)
-        {
-            
-            foreach (BasicEffect effect in mesh.Effects)
-            {
-
-                GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                effect.World = scrmgnt.World;
-                effect.View = _camera.View;
-                effect.Projection = projection;
-                if (effect.LightingEnabled == false)
-                {
-                    effect.EnableDefaultLighting();
-                }
-            }
-            mesh.Draw();
-        }
+        
 
 
         
