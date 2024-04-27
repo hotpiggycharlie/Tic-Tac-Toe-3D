@@ -24,7 +24,7 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
+/processorParam:RotationX=90
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
@@ -43,7 +43,7 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=180
+/processorParam:RotationX=90
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
@@ -89,8 +89,8 @@
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
 /processorParam:RotationX=0
-/processorParam:RotationY=180
-/processorParam:RotationZ=90
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
@@ -223,6 +223,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Nought.obj
 
+#begin Numbers/numbers.obj
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Numbers/numbers.obj
+
 #begin Room.obj
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -235,8 +254,8 @@
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
 /processorParam:RotationX=0
-/processorParam:RotationY=180
-/processorParam:RotationZ=90
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed

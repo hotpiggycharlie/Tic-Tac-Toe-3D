@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
-    internal class BackgroundManagment
+    internal class BackgroundManagment: DrawableGameComponent
 {
         private Matrix world;
         private List<Model> _backGroundManagerList;
@@ -19,7 +20,7 @@ namespace _3Dtests
 
         private List<Model> _MainGameLoopBackGroundManagerList;
 
-        public BackgroundManagment(Model MenuBack)
+        public BackgroundManagment(Model MenuBack, Game game): base(game)
         {
             _backGroundManagerList = new List<Model>
             {
@@ -35,11 +36,12 @@ namespace _3Dtests
             _MainGameLoopBackGroundManagerList.Clear();
         }
 
-        public void DrawMain(Matrix view, Matrix Projection, Action<Model, Matrix, Matrix, Matrix> DrawModel)
+
+        public void DrawMain(Matrix view, Matrix Projection)
         {
             foreach (var model in _backGroundManagerList)
             {
-                DrawModel(model, world, view, Projection);
+                UpdateProcedures.DrawModel(model, world, view, Projection, GraphicsDevice);
             }
         }
 

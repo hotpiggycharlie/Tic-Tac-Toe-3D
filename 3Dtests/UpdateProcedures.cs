@@ -1,5 +1,5 @@
-﻿using _3Dtests.Content;
-using _3Dtests.Enumerators;
+﻿using Tic_Tac_Toe.Content;
+using Tic_Tac_Toe.Enumerators;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     static class UpdateProcedures
 {
@@ -67,8 +67,26 @@ namespace _3Dtests
 
         /*.____________________________________________________________________________________________________________________________________________________________________.*/
 
+        public static void DrawModel(Model model, Matrix world, Matrix view, Matrix Projection, GraphicsDevice device)
+        {
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
 
-        
+                    device.DepthStencilState = DepthStencilState.Default;
+                    effect.World = world;
+                    effect.View = view;
+                    effect.Projection = Projection;
+                    if (effect.LightingEnabled == false)
+                    {
+                        effect.EnableDefaultLighting();
+                    }
+                }
+                mesh.Draw();
+            }
+        }
+
 
     }
 }

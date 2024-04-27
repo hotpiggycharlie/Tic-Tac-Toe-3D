@@ -1,4 +1,4 @@
-﻿using _3Dtests.Content;
+﻿using Tic_Tac_Toe.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
 
     class Cell // class for each and every cell on the board, exists mostly to spite me, also handles the model of the nought or cross it contains, this is my least favourite class
@@ -26,7 +26,7 @@ namespace _3Dtests
         public Model ExtraModel { get { return _extraModel; } }
         public Cell(Vector2 Coordinates, Model model)
         {
-            Position = new Vector3(Coordinates.X, Coordinates.Y, 0.25f);
+            Position = new Vector3(Coordinates.X, 0.15f, Coordinates.Y);
             _model = model;
         }
 

@@ -1,3 +1,3 @@
 ﻿
-using var game = new _3Dtests.Game1();
+using var game = new Tic_Tac_Toe.Game1();
 game.Run();

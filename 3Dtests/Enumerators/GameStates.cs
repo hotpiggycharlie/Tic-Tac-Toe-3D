@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests.Enumerators
+namespace Tic_Tac_Toe.Enumerators
 {
     enum GameStates //handles the states of games, e.g. whether the game has started or what game mode was picked
 {

@@ -1,10 +1,10 @@
-﻿using _3Dtests.Content;
+﻿using Tic_Tac_Toe.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     static class EnemyAiController // Room for expansion here lol
 {

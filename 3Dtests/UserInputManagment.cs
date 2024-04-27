@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     static class UserInputManagment //A collection of tools, these will be important later ;)
 {

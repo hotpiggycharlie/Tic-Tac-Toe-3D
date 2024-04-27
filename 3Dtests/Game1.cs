@@ -1,12 +1,12 @@
-﻿using _3Dtests.Content;
-using _3Dtests.Enumerators;
+﻿using Tic_Tac_Toe.Content;
+using Tic_Tac_Toe.Enumerators;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     public class Game1 : Game
     {
@@ -20,7 +20,7 @@ namespace _3Dtests
         private double FpsTime;
         private int TEMPFPS, FPS, BoardSize = 3;
         public string DebugString;
-        private Vector3 CameraPosition = new Vector3(-4,-16,15);
+        //private Vector3 CameraPosition = new Vector3(-4,-16,15);
         MouseState delayedMouseState;
         private GameStates Gamestate = GameStates.Menu;
         private Texture2D _menuBackground;
@@ -32,12 +32,14 @@ namespace _3Dtests
         private Player _player1, _player2;
         private int _playerturn;
         private BackgroundManagment _backgroundManagment;
-
+        private Camera _camera;
         public event Action Start;
+        private Vector3 mouseRotationBuffer;
+        private bool DebugMode;
+        private KeyboardState DelayedKstate;
+        ScoreManagment scrmgnt;
 
-        private Matrix view = Matrix.CreateLookAt(new Vector3(-4, -16, 15), new Vector3(-4, -10, 15), -Vector3.UnitY);
-
-        public readonly Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(60), 1280f / 720, 0.1f, 100f);
+        public readonly Matrix projection;
 
 
 
@@ -48,6 +50,7 @@ namespace _3Dtests
             _graphics.PreferredBackBufferWidth = 1280; //Sets resolution
             _graphics.PreferredBackBufferHeight = 720;
             _graphics.ApplyChanges();
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 0.05f, 1000f);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -55,17 +58,27 @@ namespace _3Dtests
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _camera = new Camera(this); //new Vector3(-4, -16, 15)
             _opponent = new Opponent(new Vector3(0, 0, -2)); //initialise opponent class
-            _boardManager = new BoardManager(); //initialise the board manager, which later initialises the board in
+            _boardManager = new BoardManager(this, _camera); //initialise the board manager, which later initialises the board in
 
             MenuInitialiseButtons();
 
             _player1 = new Player(CellState.Cross, "Player 1");
             _player2 = new Player(CellState.Nought, "Player 2");
+            scrmgnt = new ScoreManagment(this, Content.Load<Model>("Numbers/numbers"), _player1, _player2);
 
-            _backgroundManagment = new BackgroundManagment(Content.Load<Model>("Room"));
+            _backgroundManagment = new BackgroundManagment(Content.Load<Model>("Room"), this);
 
             Start += _backgroundManagment.SortAssets;
+
+            Components.Add(scrmgnt);
+            Components.Add(_backgroundManagment);
+            Components.Add(_boardManager);
+            Components.Add(_camera);
+
+            _boardManager.TurnEnd += TurnManagment;
+
 
             base.Initialize();
             _window = this.Window;
@@ -90,12 +103,11 @@ namespace _3Dtests
 
             
             _opponent.Model = Content.Load<Model>("Itbegins");
-            _boardManager.LoadModelBoard(Content.Load<Model>("Board"));
+            _boardManager.LoadModelBoard(Content.Load<Model>("Board"), this);
             _cellModel = Content.Load<Model>("Cell");
             _font = Content.Load<SpriteFont>("DebugText");
             cross = Content.Load<Model>("Cross");
             nought = Content.Load<Model>("Nought");
-            _menuBackground = Content.Load<Texture2D>("MenuButtons/MenuBack");
         }
 
         protected override void Update(GameTime gameTime)
@@ -126,8 +138,22 @@ namespace _3Dtests
                                                        //(getstates don't work outside of Game1)
         {
             var kstate = Keyboard.GetState();
+            if (kstate.IsKeyDown(Keys.LeftAlt) && !(DelayedKstate.IsKeyDown(Keys.LeftAlt))) //PRESS LEFT-ALT TO ENTER A DEBUGGING STATE, HELPED ME MASSIVELY
+            {
+                if (!DebugMode)
+                {
+                    DebugMode = true;
+                    DebugString = "DEBUG MODE: FREECAM";
+                    this.IsMouseVisible = false;
+
+                }
+                else
+                {
+                    DebugMode = false;
+                }
+            }
             TEMPFPS++;
-            FpsTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            FpsTime += gameTime.ElapsedGameTime.TotalMilliseconds; //BASIC FPS COUNTER, THIS WAS MADE JUST WHEN I WAS TESTING THINGS
             if (FpsTime >= 1000)
             {
                 FPS = TEMPFPS;
@@ -135,31 +161,90 @@ namespace _3Dtests
                 FpsTime = 0;
             }
 
-            var mouseState = Mouse.GetState(_window);
-
-            if (mouseState.Y >= 600)
+            var mouseState = Mouse.GetState(_window); //TAKE THE MOUSE STATE
+            if (!DebugMode)
             {
-                Target = new Vector3(0, 8, -1);
-            }
-            else if (mouseState.Y <= 100)
-            {
-                Target = new Vector3(-4, -10, 15);
-            }
-            if (CurrentFacing != Target)
-            {
-                CurrentFacing = Vector3.Lerp(CurrentFacing, Target, 0.25f);
-            }
-            view = Matrix.CreateLookAt(CameraPosition, CurrentFacing, Vector3.Down);
-
-            if (_boardManager.Initialized)
-            {
-                Cell hoveringOver = _boardManager.MouseHoveringOverCell(new Vector2(mouseState.X, mouseState.Y), view, projection, this.GraphicsDevice.Viewport);
-                if (hoveringOver != null)
+                if (mouseState.Y >= 600) //THIS HANDLES LOOKING UP AND DOWN USING THE MOUSE POSITION, THIS IS DONE IN A BASIC MANNER
                 {
-                    TurnManagment(mouseState, hoveringOver);
+                    Target = _boardManager.Board.Position;
                 }
+                else if (mouseState.Y <= 100)
+                {
+                    Target = new Vector3(0, 7f, -3);
+                }
+                if (CurrentFacing != Target)
+                {
+                    CurrentFacing = Vector3.SmoothStep(CurrentFacing, Target, 0.15f); //THIS HANDLES THE SMOOTHING OF THE CAMERA WHEN TURNING
+                }
+                _camera.SetLookAt(CurrentFacing);
             }
-            delayedMouseState = mouseState;
+
+            
+
+            if (DebugMode)
+            {
+                DebugUpdateLoop(mouseState, gameTime, kstate);
+                Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); //HANDLES DEBUG MODE
+
+            }
+
+            delayedMouseState = mouseState; //SETS MY DELAYED MOUSE & KEYBOARD STATE AT END OF UPDATE LOOP
+            DelayedKstate = kstate;
+        }
+
+        private void DebugUpdateLoop(MouseState mouseState, GameTime gameTime, KeyboardState kstate)
+        {
+            Vector3 moveVector = Vector3.Zero;
+            float deltaX;
+            float deltaY;
+            if (mouseState != delayedMouseState)
+            {
+                deltaX = mouseState.X - (GraphicsDevice.Viewport.Width / 2);
+                deltaY = mouseState.Y - (GraphicsDevice.Viewport.Height / 2);
+
+                mouseRotationBuffer.X -= 0.1f * deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                mouseRotationBuffer.Y -= 0.1f * deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (mouseRotationBuffer.Y < MathHelper.ToRadians(-75.0f))
+                {
+                    mouseRotationBuffer.Y = mouseRotationBuffer.Y - (mouseRotationBuffer.Y - MathHelper.ToRadians(-75.0f));
+                }
+
+                if (mouseRotationBuffer.Y > MathHelper.ToRadians(75.0f))
+                {
+                    mouseRotationBuffer.Y = mouseRotationBuffer.Y - (mouseRotationBuffer.Y - MathHelper.ToRadians(75.0f));
+                }
+
+                _camera.SetRotation(new Vector3(-MathHelper.Clamp(mouseRotationBuffer.Y, MathHelper.ToRadians(-75.0f), MathHelper.ToRadians(75.0f)),
+                    MathHelper.WrapAngle(mouseRotationBuffer.X), 0));
+
+
+
+            }
+            if (kstate.IsKeyDown(Keys.W)) //forward
+                moveVector.Z = 1;
+
+            if (kstate.IsKeyDown(Keys.S)) //back
+                moveVector.Z = -1;
+
+            if (kstate.IsKeyDown(Keys.A)) //left
+                moveVector.X = 1;
+
+            if (kstate.IsKeyDown(Keys.D)) //right
+                moveVector.X = -1;
+
+            if (kstate.IsKeyDown(Keys.LeftControl)) //down
+                moveVector.Y = -1;
+
+            if (kstate.IsKeyDown(Keys.Space)) //up
+                moveVector.Y = +1;
+
+            if (moveVector != Vector3.Zero)
+            {
+                moveVector *= (float)gameTime.ElapsedGameTime.TotalSeconds; //to make FPS irrelevent
+
+                _camera.SetPosition(moveVector);
+            }
         }
 
         private void TurnManagment(MouseState mouseState, Cell hoveringOver)
@@ -258,22 +343,29 @@ namespace _3Dtests
 
                         if (Gamestate == GameStates.VsAi)
                         {
-                            DrawModel(_opponent.Model, _opponent.World, view, projection);
+                            UpdateProcedures.DrawModel(_opponent.Model, _opponent.World, _camera.View, projection, GraphicsDevice);
                         }
 
-                        if (_boardManager.Initialized)
+                        
+                        _backgroundManagment.DrawMain(_camera.View, projection);
+                        if(scrmgnt.Draw == true)
                         {
-                            DrawBoard();
+                            if (_player1.Score != 0)
+                            {
+                                DrawModelMesh(scrmgnt.ScoreUpdate(_player1.Score));
+                            }
+                            if (_player2.Score != 0)
+                            {
+                                DrawModelMesh(scrmgnt.ScoreUpdate(_player2.Score));
+                            }
                         }
-                        _backgroundManagment.DrawMain(view, projection, DrawModel);
                         break;
                     }
                 case GameStates.Menu:
                 {
-                        _backgroundManagment.DrawMain(view, projection, DrawModel);
+                        _backgroundManagment.DrawMain(_camera.View, projection);
                         _spriteBatch.Begin();
                         GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                        //_spriteBatch.Draw(_menuBackground, Vector2.Zero, Color.White);
                         foreach(MenuButton button in _buttons)
                         {
                             button.Draw(_spriteBatch);
@@ -287,39 +379,26 @@ namespace _3Dtests
             base.Draw(gameTime);
         }
 
-
-        private void DrawBoard()
+        private void DrawModelMesh(ModelMesh mesh)
         {
-            DrawModel(_boardManager.Board.BoardModel, _boardManager.Board.World, view, projection);
-            foreach (Cell cell in _boardManager.CellGrid)
+            
+            foreach (BasicEffect effect in mesh.Effects)
             {
-                DrawModel(cell.Model, cell.World, view, projection);
-                if (cell.Marked())
+
+                GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                effect.World = scrmgnt.World;
+                effect.View = _camera.View;
+                effect.Projection = projection;
+                if (effect.LightingEnabled == false)
                 {
-                    DrawModel(cell.ExtraModel, cell.World, view, projection);
+                    effect.EnableDefaultLighting();
                 }
             }
+            mesh.Draw();
         }
 
-        private void DrawModel(Model model, Matrix world, Matrix view, Matrix Projection)
-        {
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach(BasicEffect effect in mesh.Effects)
-                {
 
-                    GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                    effect.World = world;
-                    effect.View = view;
-                    effect.Projection = Projection;
-                    if (effect.LightingEnabled == false)
-                    {
-                        effect.EnableDefaultLighting();
-                    }
-                }
-                mesh.Draw();
-            }
-        }
+        
 
     }
 }

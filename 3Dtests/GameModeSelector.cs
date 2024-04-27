@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3Dtests
+namespace Tic_Tac_Toe
 {
     class GameModeSelector: MenuButton //does what it says on the tin, inherits from default menu button
 {
