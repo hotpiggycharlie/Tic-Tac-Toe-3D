@@ -19,6 +19,7 @@ namespace Tic_Tac_Toe
         private Matrix _world;
         private int _cellNumber;
         private Vector3 _rayDirection;
+        public bool SELECTED = false;
         public int CellNumber { get { return _cellNumber; } }
         public Matrix World { get { return _world; } }
         public Model Model { get { return _model; } }

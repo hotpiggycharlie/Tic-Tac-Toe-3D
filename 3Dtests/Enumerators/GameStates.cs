@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Tic_Tac_Toe.Enumerators
 {
-    enum GameStates //handles the states of games, e.g. whether the game has started or what game mode was picked
+    public enum GameStates //handles the states of games, e.g. whether the game has started or what game mode was picked
 {
         Menu,
         VsAi,
         PVP,
         Options, //unused, but nice to know it exists
-        Animations //also unused but I might have plans???
+        Animations, //also unused but I might have plans???
+        SignInMenu
 }
 }

@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Tic_Tac_Toe
 {
-    class Player
+    public class Player
 {
 
         public string Name { get; set; }
         public int Score { get; set; }
         public CellState PlayerTeam { get; set; }
+
+        public int UserID { get; set; }
 
         public Player(CellState playerTeam, string name)
         {

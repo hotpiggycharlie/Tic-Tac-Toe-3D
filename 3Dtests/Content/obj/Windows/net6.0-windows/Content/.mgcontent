@@ -6,23 +6,41 @@
   <SourceFiles>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Board.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Cell.obj</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Character.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Cross.obj</File>
-    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Itbegins.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/3x3.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/4x4.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/5x5.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/9x9.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/AI.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/ButtonBlank.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/ButtonTexture.png</File>
-    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/MenuBack.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/EASY.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/HARD.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/LeaderBoard.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/Login.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/LoginTextInput.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/MEDIUM.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/PVP.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/Settings.png</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/MenuButtons/Sign Up.png</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Nought.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Numbers/numbers.obj</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Room.obj</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/RoundEndText.spritefont</File>
     <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Text.spritefont</File>
+    <File>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/TextInput.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

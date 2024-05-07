@@ -14,7 +14,7 @@ namespace Tic_Tac_Toe
         private Texture2D _PrimaryTexture;
         private Texture2D _SecondaryTexture;
 
-        public GameModeSelector(Texture2D texture1, Texture2D texture2, Vector2 position): base(texture1, position)
+        public GameModeSelector(Texture2D texture1, Texture2D texture2, Vector2 position, int ID): base(texture1, position, ID)
         {
             _PrimaryTexture = texture1;
             _SecondaryTexture = texture2;

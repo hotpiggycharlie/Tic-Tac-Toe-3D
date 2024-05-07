@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tic_Tac_Toe.Content
 {
-    enum CellState //overkill, but why not, I'm just fancy like that
+    public enum CellState //overkill, but why not, I'm just fancy like that
 {
     Empty,
     Nought,

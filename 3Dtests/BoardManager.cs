@@ -22,17 +22,23 @@ namespace Tic_Tac_Toe
         public Board Board { get { return _board; } }
         public Cell[,] CellGrid { get { return boardMetaphor; } }
         public bool Initialized { get { return _initialize; } }
+
+        public bool Playable { get; private set; }
+
         private Camera _camera;
         private Matrix projection;
         public Action<MouseState, Cell> TurnEnd;
         private GameWindow window;
+        Game1 game1;
 
         public BoardManager(Game game, Camera camera) : base(game)
         {
             _camera = camera;
-            Game1 game1 = (Game1)game;
+            game1 = (Game1)game;
             projection = game1.projection;
             window = game1.Window;
+            game1.RoundEnd += Reset;
+            Playable = true;
         }
 
         public void Inistialize(int BoardSizeX, int BoardSizeY, Model cellModel) 
@@ -60,17 +66,22 @@ namespace Tic_Tac_Toe
         }
 
 
-        public void Reset()
+        public void Reset(CellState? cell)
         {
-            if (_initialize)
+            Playable = false;
+            if (game1.RoundEndScreenNum == 119)
             {
-                for (int i = 0; i < boardMetaphor.GetLength(1); i++)
+                if (_initialize)
                 {
-                    for (int j = 0; j < boardMetaphor.GetLength(0); j++)
+                    for (int i = 0; i < boardMetaphor.GetLength(1); i++)
                     {
-                        boardMetaphor[i, j].State = CellState.Empty;
+                        for (int j = 0; j < boardMetaphor.GetLength(0); j++)
+                        {
+                            boardMetaphor[i, j].State = CellState.Empty;
+                        }
                     }
                 }
+                Playable = true;
             }
         }
 
@@ -123,32 +134,21 @@ namespace Tic_Tac_Toe
 
         public override void Update(GameTime gameTime)
         {
-            if (Initialized)
+            if (Initialized && Playable)
             {
                 MouseState mouseState = Mouse.GetState(window);
                 Cell hoveringOver = MouseHoveringOverCell(new Vector2(mouseState.X, mouseState.Y), _camera.View, projection, this.GraphicsDevice.Viewport);
                 if (hoveringOver != null)
                 {
+                    hoveringOver.SELECTED = true;
                     TurnEnd.Invoke(mouseState, hoveringOver);
                 }
             }
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)//caused some bugs?
         {
-            if (Initialized)
-            {
-                UpdateProcedures.DrawModel(Board.BoardModel, Board.World, _camera.View, projection, GraphicsDevice);
-                foreach (Cell cell in CellGrid)
-                {
-                    UpdateProcedures.DrawModel(cell.Model, cell.World, _camera.View, projection, GraphicsDevice);
-                    if (cell.Marked())
-                    {
-                        UpdateProcedures.DrawModel(cell.ExtraModel, cell.World, _camera.View, projection, GraphicsDevice);
-                    }
-                }
-            }
             base.Draw(gameTime);
         }
 

@@ -7,12 +7,16 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tic_Tac_Toe.Content;
+using MySql.Data.MySqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Tic_Tac_Toe
 {
     internal class ScoreManagment: DrawableGameComponent //class to manage everything score related, database and all lol
     {
 
+        private MySqlConnection connection;
 
         private Model _numbers;
         public Matrix World = Matrix.CreateWorld(new Vector3(0,5,0), -Vector3.UnitZ, Vector3.Up);
@@ -58,6 +62,8 @@ namespace Tic_Tac_Toe
             base.Draw(gameTime);
         }
 
+
+
         private void DrawModelMesh(ModelMesh mesh, Matrix world, Vector3 Colour)
         {
 
@@ -73,6 +79,7 @@ namespace Tic_Tac_Toe
                 {
                     effect.EnableDefaultLighting();
                 }
+                effect.EmissiveColor = Colour*0.5f;
             }
             mesh.Draw();
         }

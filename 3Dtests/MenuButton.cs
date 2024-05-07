@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct3D9;
 
 namespace Tic_Tac_Toe
 {
@@ -15,18 +14,21 @@ namespace Tic_Tac_Toe
 {
         private bool _isChecked = true;
 
+        public int ID;
+
         public bool IsChecked { get { return _isChecked; } set { _isChecked = value; } }
 
-        private Texture2D _texture;
-        private Vector2 _position;
+        protected Texture2D _texture;
+        protected Vector2 _position;
 
         public Color Colour = Color.White;
 
         public Texture2D Texture { get { return _texture; } set { _texture = value; } }
-        public MenuButton(Texture2D texture, Vector2 position)
+        public MenuButton(Texture2D texture, Vector2 position, int ID)
         {
             _position = position;
             _texture = texture;
+            this.ID = ID;
         }
         public Rectangle rectangle
         {
@@ -36,7 +38,7 @@ namespace Tic_Tac_Toe
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, rectangle, Colour);
         }
