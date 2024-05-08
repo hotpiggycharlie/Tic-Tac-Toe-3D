@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Tic_Tac_Toe
 {
-    class TextBox: MenuButton
+    class TextBox: MenuButton //inherit menu button, its a custom coded class to take input from keyboard into text (its just a text box)
     {
         public string heldText { get { return strbuilder.ToString(); } }
         private StringBuilder strbuilder = new StringBuilder();
@@ -60,7 +60,7 @@ namespace Tic_Tac_Toe
             }
         }
 
-        private bool WithinLimits(Char input)
+        private bool WithinLimits(Char input)//check if inputted character fits into ascii (for database) and other custom parameters
         {
             if (Char.IsLetterOrDigit(input) && Char.IsAscii(input))
             {
@@ -84,7 +84,7 @@ namespace Tic_Tac_Toe
             return false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch) //draws itself by overriding menubutton, is called by main draw method in main
         {
             base.Draw(spriteBatch);
             if (heldText != "")

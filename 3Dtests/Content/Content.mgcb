@@ -245,6 +245,30 @@
 /processorParam:TextureFormat=Color
 /build:MenuButtons/MEDIUM.png
 
+#begin MenuButtons/P1CustomFaceButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/P1CustomFaceButton.png
+
+#begin MenuButtons/P2CustomFaceButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/P2CustomFaceButton.png
+
 #begin MenuButtons/PVP.png
 /importer:TextureImporter
 /processor:TextureProcessor

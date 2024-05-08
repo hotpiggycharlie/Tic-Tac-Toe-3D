@@ -13,7 +13,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Tic_Tac_Toe
 {
-    internal class ScoreManagment: DrawableGameComponent //class to manage everything score related, database and all lol
+    internal class ScoreManagment: DrawableGameComponent //class to manage everything score related in game, models and such
     {
 
         private MySqlConnection connection;

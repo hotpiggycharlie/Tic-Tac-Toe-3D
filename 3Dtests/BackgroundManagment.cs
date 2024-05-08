@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Tic_Tac_Toe
 {
-    internal class BackgroundManagment: DrawableGameComponent
+    internal class BackgroundManagment: DrawableGameComponent //somewhat unused, but code it too reliant for it to be removed
 {
         private Matrix world;
         private List<Model> _backGroundManagerList;

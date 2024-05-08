@@ -12,7 +12,7 @@ namespace Tic_Tac_Toe.Enumerators
         VsAi,
         PVP,
         Options, //unused, but nice to know it exists
-        Animations, //also unused but I might have plans???
+        Animations, //unused, time limitations mostly :(
         SignInMenu
 }
 }

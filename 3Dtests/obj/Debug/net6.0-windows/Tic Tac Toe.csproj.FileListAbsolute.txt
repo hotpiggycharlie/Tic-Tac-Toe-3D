@@ -89,3 +89,5 @@ C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dt
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\obj\Debug\net6.0-windows\Tic Tac Toe.genruntimeconfig.cache
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\obj\Debug\net6.0-windows\ref\Tic Tac Toe.dll
 C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\MenuButtons\LoginTextInput.xnb
+C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\MenuButtons\P1CustomFaceButton.xnb
+C:\Users\charl\OneDrive - Barnsley College\Computer Science Projects\3Dtests\3Dtests\bin\Debug\net6.0-windows\Content\MenuButtons\P2CustomFaceButton.xnb

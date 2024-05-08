@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.IO;
+using System.Windows.Forms;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using System.Threading;
 
 namespace Tic_Tac_Toe
 {
@@ -24,7 +28,6 @@ namespace Tic_Tac_Toe
         private string RoundWinner;
         
         //Custom Classes
-        private MenuButton _startButton;
         private MenuButton[] _boardSizeButtons = new MenuButton[4];
         private DataBaseManager _databaseManager;
         private ScoreManagment scrmgnt;
@@ -34,7 +37,7 @@ namespace Tic_Tac_Toe
         private GameModeSelector _modeSelector;
         private List<MenuButton> _buttons = new List<MenuButton>(); //list lol
         private List<TextBox> _textBoxs = new List<TextBox>();
-        private Opponent _opponent;
+        private Characters _opponent;
         private BoardManager _boardManager;
 
         //Drawable Content
@@ -42,13 +45,14 @@ namespace Tic_Tac_Toe
         private SpriteFont _font, _RoundEndFont, _textBoxFont;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Texture2D FacePlayer1, FacePlayer2;
 
         //Delegates and structures
         public Action<CellState?> RoundEnd;
         public readonly Matrix projection;
         private KeyboardState DelayedKstate;
         public event Action Start;
-        private Vector3 mouseRotationBuffer, Target, CurrentFacing;
+        private Vector3 mouseRotationBuffer, Target, CurrentFacing, TargetPos, CurrentPos;
         private MouseState delayedMouseState;
 
 
@@ -67,7 +71,7 @@ namespace Tic_Tac_Toe
         {
             // TODO: Add your initialization logic here
             _camera = new Camera(this); //new Vector3(-4, -16, 15)
-            _opponent = new Opponent(new Vector3(0, 0f, -3.5f)); //initialise opponent class
+            _opponent = new Characters(new Vector3(0,0,3.5f), new Vector3(0, 0f, -3.5f)); //initialise opponent class
             _boardManager = new BoardManager(this, _camera); //initialise the board manager, which later initialises the board in
 
             MenuInitialiseButtons();
@@ -91,25 +95,18 @@ namespace Tic_Tac_Toe
             Components.Add(_databaseManager);
 
             _boardManager.TurnEnd += TurnManagment;
-            _databaseManager.RefreshLeaderboard(_buttons[10]);
+            _databaseManager.RefreshLeaderboard();
 
             base.Initialize();
             _window = this.Window;
         }
 
 
-        public void MakeNewDatabase(bool isP2)
-        {
-            if (isP2)
-            {
-                _databaseManager = new DataBaseManager(this, new Texture2D[] { Content.Load<Texture2D>("MenuButtons/LoginTextInput"), Content.Load<Texture2D>("MenuButtons/Sign Up"), Content.Load<Texture2D>("MenuButtons/Login") }, Content.Load<SpriteFont>("TextInput"), _player2);
-            }
-        }
 
 
         private void MenuInitialiseButtons()
         {
-            _buttons.Add(_startButton = new MenuButton(Content.Load<Texture2D>("MenuButtons/ButtonTexture"), new Vector2(38, 172), 1)); //initialises start button lol
+            _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/ButtonTexture"), new Vector2(38, 172), 1)); //initialises start button lol
             //_buttons.Add(_settings = new MenuButton(Content.Load<Texture2D>("MenuButtons/Settings"), new Vector2(38, 265)));
             _buttons.Add(_boardSizeButtons[0] = new MenuButton(Content.Load<Texture2D>("MenuButtons/3x3"), new Vector2(414, 174), 2));
             _buttons.Add(_boardSizeButtons[1] = new MenuButton(Content.Load<Texture2D>("MenuButtons/5x5"), new Vector2(531, 174), 3));
@@ -122,6 +119,8 @@ namespace Tic_Tac_Toe
             _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/MEDIUM"), new Vector2(662, 254), 9));
             _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/HARD"), new Vector2(662, 326), 10));
             _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/LeaderBoard"), new Vector2(949, 25), 11));
+            _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/P1CustomFaceButton"), new Vector2(698, 659), 12));
+            _buttons.Add(new MenuButton(Content.Load<Texture2D>("MenuButtons/P2CustomFaceButton"), new Vector2(828, 659), 13));
         }
 
         protected override void LoadContent()
@@ -140,6 +139,8 @@ namespace Tic_Tac_Toe
             nought = Content.Load<Model>("Nought");
         }
 
+
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -148,9 +149,7 @@ namespace Tic_Tac_Toe
             switch (Gamestate) {
                 case GameStates.Menu:
             {
-                        UpdateProcedures.MenuUpdate( _buttons, _window,ref delayedMouseState,
-                            _modeSelector,ref Gamestate,ref _playerturn, _boardManager,ref BoardSize, _cellModel,
-                            _textBoxs, ref difficulty, ref MaxRounds, _databaseManager); //just a few things to pass over... OK maybe more than I thought lol. (and this is just for the menu)
+                        MenuUpdate();
 
                         DebugString = _textBoxs[0].heldText;
                         break;
@@ -163,6 +162,184 @@ namespace Tic_Tac_Toe
             }
             base.Update(gameTime);
         }
+
+
+        private void MenuUpdate() //UPDATE FOR THE MENU (I can't really read this anymore)
+        {
+
+            foreach (MenuButton button in _buttons)
+            {
+                button.Colour = Color.White;
+            }
+            var mouseState = Mouse.GetState(_window);
+            Rectangle MouseCollider = new Rectangle(mouseState.X, mouseState.Y, 10, 10);
+            MenuButton? ButtonHovering = UserInputManagment.HoveringOverButton(MouseCollider, _buttons);
+            int temp = 0;
+            if (ButtonHovering != null)
+            {
+                temp = ButtonHovering.ID;
+            }
+            switch (temp)
+            {
+                case 1: //start button
+                    {
+
+
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            if (_modeSelector.IsChecked == true)
+                            {
+                                Gamestate = GameStates.PVP;
+                                _playerturn = 1;
+                            }
+                            else
+                            {
+                                Gamestate = GameStates.VsAi;
+                            }
+
+                            try
+                            {
+                                MaxRounds = int.Parse(_textBoxs[0].heldText);
+                            }
+                            catch
+                            {
+                                MaxRounds = 3;
+                            }
+
+                            _boardManager.Inistialize(BoardSize, BoardSize, _cellModel);
+
+                        }
+                        break;
+                    }
+
+                case 0://if nothing is being hovered over
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            foreach (var textBox in _textBoxs)
+                            {
+                                textBox.IsChecked = false;
+                            }
+                        }
+                        break;
+                    }
+
+                case 6://game mode selecter
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            _modeSelector.SwapCurrentTexture();
+                        }
+                        break;
+                    }
+                case 2://board size 3x3
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 3; }
+                        break;
+                    }
+                case 3://board size 5x5
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 5; }
+                        break;
+                    }
+                case 4://board size 4x4
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 4; }
+                        break;
+                    }
+                case 5://board size 9x9
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 9; }
+                        break;
+                    }
+                case 8://difficulty ez
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { difficulty = 1; }
+                        break;
+                    }
+                case 9://difficulty medium
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { difficulty = 2; }
+                        break;
+                    }
+                case 10://difficulty hard
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { difficulty = 3; }
+                        break;
+                    }
+                case 11://leaderboard
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { _databaseManager.RefreshLeaderboard(); }
+                        break;
+                    }
+                case 12:
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            var t = new Thread((ThreadStart)(() => //HONESTLY IDK, IT CREATES A TEMPORARY THREAD WHICH SOLVES A BUG, THIS THREAD IS STA WHICH ALLOWS WINDOWS FORMS TO RUN.
+                            {
+                                OpenFileDialog fileDialog = new OpenFileDialog();
+                                fileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+                                if (fileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    FacePlayer1 = Texture2D.FromFile(GraphicsDevice, fileDialog.FileName);
+                                }
+                                return;
+                            }));
+
+                            t.SetApartmentState(ApartmentState.STA);
+                            t.Start();
+                            t.Join();
+                        }
+                        break;
+                    }
+                case 13:
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            var t = new Thread((ThreadStart)(() => //HONESTLY IDK, IT CREATES A TEMPORARY THREAD WHICH SOLVES A BUG, THIS THREAD IS STA WHICH ALLOWS WINDOWS FORMS TO RUN.
+                            {
+                                OpenFileDialog fileDialog = new OpenFileDialog();
+                                fileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+                                if (fileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    FacePlayer2 = Texture2D.FromFile(GraphicsDevice, fileDialog.FileName);
+                                }
+                                return;
+                            }));
+
+                            t.SetApartmentState(ApartmentState.STA);
+                            t.Start();
+                            t.Join();
+                        }
+                        break;
+                    }
+
+            }
+            if (!(ButtonHovering == null)) { //textboxes are handdled differently due to *several* bugs
+                foreach (TextBox txtbox in _textBoxs)
+                {
+                    if (ButtonHovering == txtbox)
+                    {
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released)
+                        {
+                            foreach (var textBox in _textBoxs)
+                            {
+                                if (textBox != txtbox)
+                                {
+                                    textBox.IsChecked = false;
+                                }
+                            }
+                            txtbox.IsChecked = true;
+                        }
+                    }
+                }
+            }
+            delayedMouseState = mouseState;
+
+
+        }
+
 
 
         private void MainUpdateLoop(GameTime gameTime) //update loop for the game, seperate method to make things simpler, kinda (I can't read)
@@ -224,8 +401,9 @@ namespace Tic_Tac_Toe
 
 
             var mouseState = Mouse.GetState(_window); //TAKE THE MOUSE STATE
-            if (!DebugMode)
+            if (!DebugMode && Gamestate == GameStates.VsAi)
             {
+                
                 if (mouseState.Y >= 600) //THIS HANDLES LOOKING UP AND DOWN USING THE MOUSE POSITION, THIS IS DONE IN A BASIC MANNER
                 {
                     Target = _boardManager.Board.Position;
@@ -238,6 +416,43 @@ namespace Tic_Tac_Toe
                 {
                     CurrentFacing = Vector3.SmoothStep(CurrentFacing, Target, 0.15f); //THIS HANDLES THE SMOOTHING OF THE CAMERA WHEN TURNING
                 }
+                _camera.SetLookAt(CurrentFacing);
+            }
+            else if (!DebugMode)
+            {
+                if (mouseState.Y >= 600) //THIS HANDLES LOOKING UP AND DOWN USING THE MOUSE POSITION, THIS IS DONE IN A BASIC MANNER
+                {
+                    Target = _boardManager.Board.Position;
+                }
+                else if (mouseState.Y <= 100)
+                {
+                    if (_playerturn == 1)
+                    {
+                        Target = new Vector3(0, 4.8f, -3.5f);
+                    }
+                    else
+                    {
+                        Target = new Vector3(0, 4.8f, 3.5f);
+                    }
+                }
+                if (CurrentFacing != Target)
+                {
+                    CurrentFacing = Vector3.SmoothStep(CurrentFacing, Target, 0.15f); //THIS HANDLES THE SMOOTHING OF THE CAMERA WHEN TURNING
+                }
+
+                if (_playerturn == 1)
+                {
+                    TargetPos = new Vector3(0, 4.8f, 3.5f);
+                }
+                else
+                {
+                    TargetPos = new Vector3(0, 4.8f, -3.5f);
+                }
+                if (CurrentPos != TargetPos)
+                {
+                    CurrentPos = Vector3.SmoothStep(CurrentPos, TargetPos, 0.25f);
+                }
+                _camera.Position = CurrentPos;
                 _camera.SetLookAt(CurrentFacing);
             }
 
@@ -253,7 +468,9 @@ namespace Tic_Tac_Toe
             DelayedKstate = kstate;
         }
 
-        private void DebugUpdateLoop(MouseState mouseState, GameTime gameTime, KeyboardState kstate)
+
+
+        private void DebugUpdateLoop(MouseState mouseState, GameTime gameTime, KeyboardState kstate)//loop only active for debugging
         {
             Vector3 moveVector = Vector3.Zero;
             float deltaX;
@@ -399,6 +616,8 @@ namespace Tic_Tac_Toe
             }
         }
 
+
+
         private void RoundEndScreen(CellState? cellstate)
         {
             RoundEndScreenNum = 0;
@@ -411,6 +630,7 @@ namespace Tic_Tac_Toe
         }
 
 
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.WhiteSmoke);
@@ -421,10 +641,8 @@ namespace Tic_Tac_Toe
                     {
                         
 
-                        if (Gamestate == GameStates.VsAi)
-                        {
-                            UpdateProcedures.DrawModel(_opponent.Model, _opponent.World, _camera.View, projection, GraphicsDevice);
-                        }
+                        UpdateProcedures.DrawCharacter(_opponent.Model, _opponent.World_2, _camera.View, projection, GraphicsDevice, Vector3.UnitZ, FacePlayer2);
+                        UpdateProcedures.DrawCharacter(_opponent.Model, _opponent.World_1, _camera.View, projection, GraphicsDevice, Vector3.UnitX, FacePlayer1);
 
                         _backgroundManagment.DrawMain(_camera.View, projection);
 
@@ -444,12 +662,12 @@ namespace Tic_Tac_Toe
                                 else
                                 {
                                     if (cell.Marked()) { 
-                                        UpdateProcedures.DrawModel(cell.Model, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(1,0,0));
-                                        UpdateProcedures.DrawModel(cell.ExtraModel, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(1, 0, 0));
+                                        UpdateProcedures.DrawModelEmissive(cell.Model, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(1,0,0));
+                                        UpdateProcedures.DrawModelEmissive(cell.ExtraModel, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(1, 0, 0));
                                     }
                                     else
                                     {
-                                        UpdateProcedures.DrawModel(cell.Model, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(0, 1, 0));
+                                        UpdateProcedures.DrawModelEmissive(cell.Model, cell.World, _camera.View, projection, GraphicsDevice, new Vector3(0, 1, 0));
                                     }
                                 }
                             }
@@ -491,9 +709,20 @@ namespace Tic_Tac_Toe
                         _backgroundManagment.DrawMain(_camera.View, projection);
                         _spriteBatch.Begin();
                         GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                        foreach(MenuButton button in _buttons)
+                        if (_modeSelector.IsChecked)
                         {
-                            button.Draw(_spriteBatch);
+                            foreach (MenuButton button in _buttons)
+                            {
+                                if(button.ID != 8 && button.ID != 9 && button.ID != 10)//difficulty AI
+                                button.Draw(_spriteBatch);
+                            }
+                        }
+                        else
+                        {
+                            foreach (MenuButton button in _buttons)
+                            {
+                                button.Draw(_spriteBatch);
+                            }
                         }
                         _spriteBatch.DrawString(_font, $"{DebugString}", Vector2.Zero, Color.Black, 0f, Vector2.Zero, 5f, SpriteEffects.None, 1);
                         _spriteBatch.DrawString(_RoundEndFont, $"You are logged in as {_databaseManager.Username}", new Vector2(20, 670), Color.DarkRed, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1);

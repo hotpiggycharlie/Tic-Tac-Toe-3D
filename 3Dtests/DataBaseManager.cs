@@ -33,10 +33,10 @@ namespace Tic_Tac_Toe
         private MouseState dmouseState;
         SpriteBatch spriteBatch;
         public int UserID;
-        public string Username, Password;
-        private bool Working, initialised = false;
-        public string[,] LeaderboardArray;
-        private Player _player;
+        public string Username, Password;//public to be got from main class for use in game
+        private bool Working, initialised = false;//does not have an initialise class, this prevents errors
+        public string[,] LeaderboardArray;//holds the leaderboard data
+        Player player;
 
 
         public DataBaseManager(Game game, Texture2D[] Textures, SpriteFont Font, Player player): base(game)
@@ -48,13 +48,14 @@ namespace Tic_Tac_Toe
             Connpassword = "qnlOzhYVtsbDtrR8N2gZ";
             port = "3306";
             Working = false;
-            connectionString = String.Format("server={0};port={1};user id={2}; password={3}; database={4};", server, port, user, Connpassword, database);
+            connectionString = string.Format("server={0};port={1};user id={2}; password={3}; database={4};", server, port, user, Connpassword, database);
             spriteFont = Font;
             LeaderboardArray = new string[25, 3];
             this.game = (Game1)game;
-            if (!SignedIn() || player.PlayerTeam == Content.CellState.Nought)
+            if (!SignedIn())
             {
                 textures = Textures;
+                this.player = player;
                 InitialiseSignIn();
             }
             else
@@ -65,9 +66,9 @@ namespace Tic_Tac_Toe
         }
 
 
-        public void IncreaseScore(Player player, int ScoreDuringRound)
+        public void IncreaseScore(Player player, int ScoreDuringRound)//called by other classes after game is won
         {
-            try
+            if(player.UserID != 0)
             {
                 string temp = ReadData("Score,Wins", $"UserID={player.UserID}");
                 string[] temparray = temp.Split('£');
@@ -75,7 +76,7 @@ namespace Tic_Tac_Toe
                 int currentwins = int.Parse(temparray[2]);
                 updatedatabase(currentscore + ScoreDuringRound, currentwins + 1, player.UserID);
             }
-            catch
+            else
             {
                 System.Windows.Forms.MessageBox.Show("Only Player 1's score can be updated as player 2 is not logged in!", "Sorgy!");
             }
@@ -83,7 +84,7 @@ namespace Tic_Tac_Toe
 
 
 
-        private bool SignedIn()
+        private bool SignedIn() //reads the file IF logged in previous
         {
             try
             {
@@ -106,7 +107,7 @@ namespace Tic_Tac_Toe
         }
 
 
-        private void InitialiseSignIn()
+        private void InitialiseSignIn() //set up for sign in menu
         {
             game.Gamestate = GameStates.SignInMenu;
             _buttons = new List<MenuButton>();
@@ -118,7 +119,7 @@ namespace Tic_Tac_Toe
             initialised = true;
         }
 
-        public void InsertData(int UserID, string Username, string Password, int score, int wins)
+        public void InsertData(int UserID, string Username, string Password, int score, int wins)//used by other classes, intends to be versatile
         {
             try
             {
@@ -144,7 +145,7 @@ namespace Tic_Tac_Toe
             }
         }
 
-        public string ReadData(string SelectedRows, string Where)
+        public string ReadData(string SelectedRows, string Where)//Used by other classes, intends to be versatile
         {
             string Data = "";
             try
@@ -186,7 +187,7 @@ namespace Tic_Tac_Toe
 
         
 
-        private void updatedatabase(int Score, int Wins, int UserID)
+        private void updatedatabase(int Score, int Wins, int UserID)//updates the database with data, used by other methods
         {
             // "UPDATE Inventory SET Inventorynumber='"+ num +"',Inventory_Name='"+name+"', Quantity ='"+ quant+"',Location ='"+ location+"' Category ='"+ category+"' WHERE Inventorynumber ='"+ numquery +"';";
             string query = "UPDATE TicTacToe SET Score=@Score,Wins =@Wins WHERE UserID=@ID";
@@ -202,7 +203,7 @@ namespace Tic_Tac_Toe
 
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)//only run when in SignInMenu game state
         {
             if (initialised) {
                 if (game.Gamestate == GameStates.SignInMenu)
@@ -246,9 +247,9 @@ namespace Tic_Tac_Toe
                 }
                 base.Update(gameTime);
             }
-        }
+        } 
 
-        private void Login()
+        private void Login()//uses other methods to login using given name and password, called by SignUp, always called if an account is used
         {
             if (!Working) {
                 Working = true;
@@ -271,6 +272,8 @@ namespace Tic_Tac_Toe
                     game.Gamestate = GameStates.Menu;
                     Username = textboxes[0].heldText;
                     Password = textboxes[1].heldText;
+                    game.UserID = UserID;
+                    player.UserID = UserID;
                 }
                 else
                 {
@@ -279,7 +282,7 @@ namespace Tic_Tac_Toe
             }
         }
 
-        private void SignUp()
+        private void SignUp()//creates a new account which is put on the database and then logs in
         {
             if (!Working)
             {
@@ -314,7 +317,7 @@ namespace Tic_Tac_Toe
         }
 
 
-        public void RefreshLeaderboard(MenuButton LeaderBoard)
+        public void RefreshLeaderboard()//refreshes the leaderboard on the menuscreen
         {
             string Data = "";
             try
@@ -356,7 +359,7 @@ namespace Tic_Tac_Toe
 
 
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)//only runs during SignInMenu
         {
             if (initialised)
             {

@@ -154,7 +154,7 @@ namespace Tic_Tac_Toe
 
         public void LoadModelBoard(Model model, Game game)
         {
-            _board = new Board(model, game);
+            _board = new Board(model);
         }
 
         public Cell? MouseHoveringOverCell(Vector2 Mouselocation, Matrix view, Matrix projection, Viewport viewport)

@@ -42,6 +42,37 @@ namespace Tic_Tac_Toe
             }
         }
 
+        public static Cell MediumMove(Cell[,] Board, BoardManager BoardManager)
+        {
+            int boardsize = Board.GetLength(0);
+            // Check if player can win in the next move and block it
+            for (int i = 0; i < boardsize; i++)
+            {
+                for (int j = 0; j < boardsize; j++)
+                {
+                    if (Board[i, j].State == CellState.Empty)
+                    {
+                        Board[i, j].State = CellState.Cross;
+                        if (BoardManager.CheckWin() == (CellState.Cross))
+                        {// Block opponent's winning move
+                            return Board[i, j];
+                        }
+                        Board[i, j].State = CellState.Empty; // Undo move
+                    }
+                }
+            }
+            // If no winning or blocking move, make a random move
+            Random rand = new Random();
+            int randRow, randCol;
+            do
+            {
+                randRow = rand.Next(0, boardsize);
+                randCol = rand.Next(0, boardsize);
+            } while (Board[randRow, randCol].State != CellState.Empty);
+            return Board[randRow, randCol];
+        }
+
+
         public static Cell HardMove(Cell[,] Board, BoardManager BoardManager)
         {
             // Check if AI can win in the next move
@@ -62,7 +93,7 @@ namespace Tic_Tac_Toe
                 }
             }
 
-            // Check if player can win in the next move and block it
+            // MediumMove code:
             for (int i = 0; i < boardsize; i++)
             {
                 for (int j = 0; j < boardsize; j++)
@@ -71,15 +102,15 @@ namespace Tic_Tac_Toe
                     {
                         Board[i, j].State = CellState.Cross;
                         if (BoardManager.CheckWin() == (CellState.Cross))
-                        {// Block opponent's winning move
+                        {
                             return Board[i, j];
                         }
-                        Board[i, j].State = CellState.Empty; // Undo move
+                        Board[i, j].State = CellState.Empty;
                     }
                 }
             }
 
-            // If no winning or blocking move, make a random move
+            // Random if all else fails
             Random rand = new Random();
             int randRow, randCol;
             do
@@ -90,35 +121,7 @@ namespace Tic_Tac_Toe
             return Board[randRow, randCol];
         }
 
-    public static Cell MediumMove(Cell[,] Board, BoardManager BoardManager)
-    {
-        int boardsize = Board.GetLength(0);
-        // Check if player can win in the next move and block it
-        for (int i = 0; i < boardsize; i++)
-        {
-            for (int j = 0; j < boardsize; j++)
-            {
-                if (Board[i, j].State == CellState.Empty)
-                {
-                    Board[i, j].State = CellState.Cross;
-                    if (BoardManager.CheckWin() == (CellState.Cross))
-                    {// Block opponent's winning move
-                        return Board[i, j];
-                    }
-                    Board[i, j].State = CellState.Empty; // Undo move
-                }
-            }
-        }
-        // If no winning or blocking move, make a random move
-        Random rand = new Random();
-        int randRow, randCol;
-        do
-        {
-            randRow = rand.Next(0, boardsize);
-            randCol = rand.Next(0, boardsize);
-        } while (Board[randRow, randCol].State != CellState.Empty);
-        return Board[randRow, randCol];
-    }
+    
 }
 
 }

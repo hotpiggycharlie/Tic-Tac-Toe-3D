@@ -13,7 +13,7 @@ namespace Tic_Tac_Toe
     internal class Camera : GameComponent//inherits game component, I only learnt I could do this recently, woops lol (my code is irrepairable and my day is ruined)
     {
         private Vector3 cameraLookAt;
-        public Vector3 Position { get; private set; }
+        public Vector3 Position { get; set; }
         public Vector3 Rotation { get; private set; }
         public Matrix View { get { return Matrix.CreateLookAt(Position, cameraLookAt, Vector3.Up); } }
 

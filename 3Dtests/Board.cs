@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Tic_Tac_Toe
 {
-    public class Board: DrawableGameComponent //LITERALLY JUST EXISTS FOR THE MODEL TO WORK LOL
+    public class Board //LITERALLY JUST EXISTS FOR THE MODEL TO WORK LOL
     {
 
         private Matrix world;
@@ -18,19 +18,14 @@ namespace Tic_Tac_Toe
         private Model model;
         public Model BoardModel { get { return model; } set { model = value; } }
         public Vector3 Position;
-        private Game1 game1;
 
-        public Board(Model x, Game game): base(game)
+        public Board(Model x)
         {
-            game1 = (Game1)game;
             Position = new Vector3(0, 2.67f, 0);
             BoardModel = x;
             world = Matrix.CreateTranslation(Position); //this just handels the board model, nothing fancy
     }
 
-        public override void Draw(GameTime gameTime)//not very useful :(
-        {
-        }
 
 
 
