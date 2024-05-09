@@ -101,18 +101,6 @@
 /processorParam:TextureFormat=Color
 /build:MenuButtons/3x3.png
 
-#begin MenuButtons/4x4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuButtons/4x4.png
-
 #begin MenuButtons/5x5.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -124,6 +112,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuButtons/5x5.png
+
+#begin MenuButtons/7x7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/7x7.png
 
 #begin MenuButtons/9x9.png
 /importer:TextureImporter

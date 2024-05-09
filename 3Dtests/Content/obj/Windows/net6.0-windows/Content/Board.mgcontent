@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/Board.obj</SourceFile>
-  <SourceTime>2024-03-26T16:31:50+00:00</SourceTime>
+  <SourceTime>2024-05-08T20:04:52.2332384+01:00</SourceTime>
   <DestFile>C:/Users/charl/OneDrive - Barnsley College/Computer Science Projects/3Dtests/3Dtests/Content/bin/Windows/Content/Board.xnb</DestFile>
-  <DestTime>2024-04-27T14:16:02.6634652+01:00</DestTime>
+  <DestTime>2024-05-09T10:10:56.1649231+01:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>ModelProcessor</Processor>

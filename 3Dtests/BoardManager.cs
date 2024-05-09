@@ -16,7 +16,8 @@ namespace Tic_Tac_Toe
     class BoardManager: DrawableGameComponent // a fancy class, it does all win checking and initialising of the board, it doesn't handle any models though
     {
         private Cell[,] boardMetaphor;
-        float TotalBoardSizeX = 1.25f, TotalBoardSizeY = 1f, CellSize = 0.018f;
+        private float TotalBoardSizeX = 1.25f, TotalBoardSizeY = 1f, CellSize = 0.018f;
+        public float ScaleFactor = 1;
         private Board _board;
         private bool _initialize = false;
         public Board Board { get { return _board; } }
@@ -51,13 +52,21 @@ namespace Tic_Tac_Toe
             float SpaceBetweenCellsX = (TotalBoardSizeX - totalspaceoccupiedx) / (BoardSizeX - 1);
             float SpaceBetweenCellsY = (TotalBoardSizeY - totalspaceoccupiedy) / (BoardSizeY - 1);
 
+            if(BoardSizeX == 7)//Cannot be found using maths as I do not know the current scale of the model, MonoGame won't tell me :(
+            {
+                ScaleFactor = 0.75f;
+            }else if(BoardSizeX == 9)
+            {
+                ScaleFactor = 0.5f;
+            }
+
             boardMetaphor = new Cell[BoardSizeX, BoardSizeY];
             for (int i = 0; i < BoardSizeX; i++) 
             {
                 for (int j = 0; j < BoardSizeY; j++)
                 {
                     Vector2 Position = new Vector2(j * SpaceBetweenCellsX + j * CellSize - 0.6f, SpaceBetweenCellsY * i + i * CellSize - 0.5f); // MIN 0.7, -0.5  MAX -0.6, 0.75
-                    boardMetaphor[i, j] = new Cell(Position, cellModel);
+                    boardMetaphor[i, j] = new Cell(Position, cellModel, ScaleFactor);
                     boardMetaphor[i, j].GetGlobalPosition(_board.World);
                     boardMetaphor[i, j].Corrections(0.15f, i * 3 + j);
                 }

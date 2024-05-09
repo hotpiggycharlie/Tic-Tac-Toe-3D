@@ -110,7 +110,7 @@ namespace Tic_Tac_Toe
             //_buttons.Add(_settings = new MenuButton(Content.Load<Texture2D>("MenuButtons/Settings"), new Vector2(38, 265)));
             _buttons.Add(_boardSizeButtons[0] = new MenuButton(Content.Load<Texture2D>("MenuButtons/3x3"), new Vector2(414, 174), 2));
             _buttons.Add(_boardSizeButtons[1] = new MenuButton(Content.Load<Texture2D>("MenuButtons/5x5"), new Vector2(531, 174), 3));
-            _buttons.Add(_boardSizeButtons[2] = new MenuButton(Content.Load<Texture2D>("MenuButtons/4x4"), new Vector2(414, 238), 4));
+            _buttons.Add(_boardSizeButtons[2] = new MenuButton(Content.Load<Texture2D>("MenuButtons/7x7"), new Vector2(414, 238), 4));
             _buttons.Add(_boardSizeButtons[3] = new MenuButton(Content.Load<Texture2D>("MenuButtons/9x9"), new Vector2(531, 238), 5));
             _buttons.Add(_modeSelector = new GameModeSelector(Content.Load<Texture2D>("MenuButtons/PVP"), Content.Load<Texture2D>("MenuButtons/AI"), new Vector2(38, 256), 6));
             _textBoxs.Add(new TextBox(new Vector2(416, 350), Content.Load<Texture2D>("MenuButtons/ButtonBlank"), this, 1, true, false, Content.Load<SpriteFont>("TextInput"), "Rounds: ", 107.5f, 370, 7));
@@ -190,7 +190,8 @@ namespace Tic_Tac_Toe
                             if (_modeSelector.IsChecked == true)
                             {
                                 Gamestate = GameStates.PVP;
-                                _playerturn = 1;
+                                Random radint = new Random();
+                                _playerturn = radint.Next(1, 2);
                             }
                             else
                             {
@@ -244,7 +245,7 @@ namespace Tic_Tac_Toe
                     }
                 case 4://board size 4x4
                     {
-                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 4; }
+                        if (mouseState.LeftButton == ButtonState.Pressed && delayedMouseState.LeftButton == ButtonState.Released) { BoardSize = 7; }
                         break;
                     }
                 case 5://board size 9x9

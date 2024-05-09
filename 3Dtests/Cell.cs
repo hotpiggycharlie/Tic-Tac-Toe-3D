@@ -24,15 +24,17 @@ namespace Tic_Tac_Toe
         public Model Model { get { return _model; } }
         public Vector3 DbugPostion { get { return Position; } }
         public Model ExtraModel { get { return _extraModel; } }
-        public Cell(Vector2 Coordinates, Model model)
+        private float Scalefactor;
+        public Cell(Vector2 Coordinates, Model model, float scalefactor)
         {
             Position = new Vector3(Coordinates.X, 0.15f, Coordinates.Y);
             _model = model;
+            Scalefactor = scalefactor;
         }
 
         public void GetGlobalPosition(Matrix BoardWorld)
         {
-            _world = Matrix.CreateTranslation(BoardWorld.Translation + Position);
+            _world = Matrix.CreateScale(Scalefactor) * Matrix.CreateTranslation(BoardWorld.Translation + Position);
         }
 
         public void Corrections(float radius, int cellNum)

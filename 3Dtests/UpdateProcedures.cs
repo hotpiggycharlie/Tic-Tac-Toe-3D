@@ -41,6 +41,29 @@ namespace Tic_Tac_Toe
             }
         }
 
+        public static void DrawModel(Model model, Matrix world, Matrix view, Matrix Projection, GraphicsDevice device, float scale)
+        {
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    device.DepthStencilState = DepthStencilState.Default;
+                    effect.World = world;
+                    effect.View = view;
+                    effect.Projection = Projection;
+                    if (effect.LightingEnabled == false)
+                    {
+                        effect.EnableDefaultLighting();
+                    }
+                    effect.EmissiveColor = Vector3.Zero;
+                }
+                mesh.Draw();
+            }
+        }
+
+
+        /*.____________________________________________________________________________________________________________________________________________________________________.*/
+
         public static void DrawCharacter(Model model, Matrix world, Matrix view, Matrix Projection, GraphicsDevice device, Vector3 Colour, Texture2D? texture)
         {
             foreach (ModelMesh mesh in model.Meshes)
