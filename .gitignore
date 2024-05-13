@@ -1,4 +1,2 @@
-\bin\Release Tictactoe\
-\bin\Release\
-\.vs\
-\.git\
+*/bin/*
+*/.vs
