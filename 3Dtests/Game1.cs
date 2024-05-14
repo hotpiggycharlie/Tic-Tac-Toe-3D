@@ -95,6 +95,7 @@ namespace Tic_Tac_Toe
             Components.Add(_databaseManager);
 
             _boardManager.TurnEnd += TurnManagment;
+
             _databaseManager.RefreshLeaderboard();
 
             base.Initialize();
@@ -191,7 +192,7 @@ namespace Tic_Tac_Toe
                             {
                                 Gamestate = GameStates.PVP;
                                 Random radint = new Random();
-                                _playerturn = radint.Next(1, 2);
+                                _playerturn = radint.Next(1, 3);
                             }
                             else
                             {

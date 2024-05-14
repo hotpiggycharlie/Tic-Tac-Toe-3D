@@ -277,7 +277,7 @@ namespace Tic_Tac_Toe
                 }
                 else
                 {
-                    Working = true;
+                    Working = false;
                 }
             }
         }
