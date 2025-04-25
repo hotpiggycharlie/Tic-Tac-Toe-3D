@@ -18,6 +18,7 @@ namespace Tic_Tac_Toe
 {
     class DataBaseManager: DrawableGameComponent
     {
+        public bool online = true;//used to check if the database is online, if not, it will not try to connect to it
         private MySqlConnection connection;
         private string server;
         private string database;
@@ -52,6 +53,24 @@ namespace Tic_Tac_Toe
             spriteFont = Font;
             LeaderboardArray = new string[25, 3];
             this.game = (Game1)game;
+            try
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                //potential for debugging string here
+                System.Windows.Forms.MessageBox.Show("Database has failed", "sorgy");
+                online = false;
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    connection.Close();
+                }
+            }
             if (!SignedIn())
             {
                 textures = Textures;
@@ -68,7 +87,8 @@ namespace Tic_Tac_Toe
 
         public void IncreaseScore(Player player, int ScoreDuringRound)//called by other classes after game is won
         {
-            if(player.UserID != 0)
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
+            if (player.UserID != 0)
             {
                 string temp = ReadData("Score,Wins", $"UserID={player.UserID}");
                 string[] temparray = temp.Split('£');
@@ -86,6 +106,7 @@ namespace Tic_Tac_Toe
 
         private bool SignedIn() //reads the file IF logged in previous
         {
+            if (online == false) { return true; } //if the database is offline, do not try to connect to it
             try
             {
                 BinaryReader reader = new BinaryReader(File.OpenRead("UserID.bin"));
@@ -109,6 +130,7 @@ namespace Tic_Tac_Toe
 
         private void InitialiseSignIn() //set up for sign in menu
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             game.Gamestate = GameStates.SignInMenu;
             _buttons = new List<MenuButton>();
             textboxes = new TextBox[2];
@@ -121,6 +143,7 @@ namespace Tic_Tac_Toe
 
         public void InsertData(int UserID, string Username, string Password, int score, int wins)//used by other classes, intends to be versatile
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             try
             {
                 connection = new MySqlConnection(connectionString);
@@ -147,6 +170,7 @@ namespace Tic_Tac_Toe
 
         public string ReadData(string SelectedRows, string Where)//Used by other classes, intends to be versatile
         {
+            if (online == false) { return ""; } //if the database is offline, do not try to connect to it
             string Data = "";
             try
             {
@@ -189,6 +213,7 @@ namespace Tic_Tac_Toe
 
         private void updatedatabase(int Score, int Wins, int UserID)//updates the database with data, used by other methods
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             // "UPDATE Inventory SET Inventorynumber='"+ num +"',Inventory_Name='"+name+"', Quantity ='"+ quant+"',Location ='"+ location+"' Category ='"+ category+"' WHERE Inventorynumber ='"+ numquery +"';";
             string query = "UPDATE TicTacToe SET Score=@Score,Wins =@Wins WHERE UserID=@ID";
             connection.Open();
@@ -205,6 +230,7 @@ namespace Tic_Tac_Toe
 
         public override void Update(GameTime gameTime)//only run when in SignInMenu game state
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             if (initialised) {
                 if (game.Gamestate == GameStates.SignInMenu)
                 {
@@ -251,6 +277,7 @@ namespace Tic_Tac_Toe
 
         private void Login()//uses other methods to login using given name and password, called by SignUp, always called if an account is used
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             if (!Working) {
                 Working = true;
                 string useridstr = ReadData("UserID", $"Username='{textboxes[0].heldText}' AND Password='{textboxes[1].heldText}'");
@@ -284,6 +311,7 @@ namespace Tic_Tac_Toe
 
         private void SignUp()//creates a new account which is put on the database and then logs in
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             if (!Working)
             {
                 if (!string.IsNullOrEmpty(textboxes[0].heldText))
@@ -319,6 +347,7 @@ namespace Tic_Tac_Toe
 
         public void RefreshLeaderboard()//refreshes the leaderboard on the menuscreen
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             string Data = "";
             try
             {
@@ -361,6 +390,7 @@ namespace Tic_Tac_Toe
 
         public override void Draw(GameTime gameTime)//only runs during SignInMenu
         {
+            if (online == false) { return; } //if the database is offline, do not try to connect to it
             if (initialised)
             {
                 if (game.Gamestate == GameStates.SignInMenu)
